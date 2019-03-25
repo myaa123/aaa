@@ -89,7 +89,7 @@ class Search extends React.Component {
             // We can silence this error because not all query strings are intended to be decoded.
         }
 
-        if (term === 'egg') {
+        if (term === 'egg' || term === 'eggs') {
             this.makeSurprise('isEgg');
         }
         this.props.dispatch(navigationActions.setSearchTerm(term));
