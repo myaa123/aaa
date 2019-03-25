@@ -110,12 +110,13 @@ const Thumbnail = props => {
             </a>
         );
     }
+
     return (
         <div
             className={classNames(
                 'thumbnail',
                 props.type,
-                props.className
+                props.className,
             )}
         >
             {imgElement}

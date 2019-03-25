@@ -20,6 +20,8 @@ const render = require('../../lib/render.jsx');
 
 const ACCEPTABLE_MODES = ['trending', 'popular'];
 
+const results = require('./eggresults.json');
+
 require('./search.scss');
 
 class Search extends React.Component {
@@ -32,11 +34,13 @@ class Search extends React.Component {
             'getTab'
         ]);
         this.state = this.getSearchState();
-        this.state.loaded = [];
+        this.state.loaded = results;
         this.state.loadNumber = 16;
         this.state.mode = 'popular';
         this.state.offset = 0;
         this.state.loadMore = false;
+
+        this.state.isEgg = false;
 
         let mode = '';
         const query = window.location.search;
@@ -84,12 +88,19 @@ class Search extends React.Component {
             // Error means that term was not URI encoded and decoding failed.
             // We can silence this error because not all query strings are intended to be decoded.
         }
+
+        if (term === 'egg') {
+            this.makeSurprise('isEgg');
+        }
         this.props.dispatch(navigationActions.setSearchTerm(term));
     }
     componentDidUpdate (prevProps) {
         if (this.props.searchTerm !== prevProps.searchTerm) {
             this.handleGetSearchMore();
         }
+    }
+    makeSurprise (surprise) {
+        this.setState({[surprise]: true});
     }
     getSearchState () {
         let pathname = window.location.pathname.toLowerCase();
@@ -169,6 +180,7 @@ class Search extends React.Component {
             <Grid
                 cards
                 showAvatar
+                isEggShaped={this.state.isEgg}
                 itemType={this.state.tab}
                 items={this.state.loaded}
                 showFavorites={false}
