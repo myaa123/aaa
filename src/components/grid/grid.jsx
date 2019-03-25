@@ -8,50 +8,62 @@ const thumbnailUrl = require('../../lib/user-thumbnail');
 
 require('./grid.scss');
 
-const Grid = props => (
-    <div className={classNames('grid', props.className)}>
-        <FlexRow>
-            {props.items.map((item, key) => {
-                const href = `/${props.itemType}/${item.id}/`;
-                if (props.itemType === 'projects') {
+const Grid = props => {
+
+    const surpriseClass = props.isEggShaped ? 'egg' : '';
+
+    return (
+        <div
+            className={classNames(
+                'grid',
+                props.className,
+                surpriseClass
+            )}
+        >
+            <FlexRow>
+                {props.items.map((item, key) => {
+                    const href = `/${props.itemType}/${item.id}/`;
+                    if (props.itemType === 'projects') {
+                        return (
+                            <Thumbnail
+                                avatar={thumbnailUrl(item.author.id)}
+                                creator={item.author.username}
+                                favorites={item.stats.favorites}
+                                href={href}
+                                key={key}
+                                loves={item.stats.loves}
+                                remixes={item.stats.remixes}
+                                showAvatar={props.showAvatar}
+                                showFavorites={props.showFavorites}
+                                showLoves={props.showLoves}
+                                showRemixes={props.showRemixes}
+                                showViews={props.showViews}
+                                src={item.image}
+                                title={item.title}
+                                type={'project'}
+                                views={item.stats.views}
+                            />
+                        );
+                    }
                     return (
                         <Thumbnail
-                            avatar={thumbnailUrl(item.author.id)}
-                            creator={item.author.username}
-                            favorites={item.stats.favorites}
                             href={href}
                             key={key}
-                            loves={item.stats.loves}
-                            remixes={item.stats.remixes}
-                            showAvatar={props.showAvatar}
-                            showFavorites={props.showFavorites}
-                            showLoves={props.showLoves}
-                            showRemixes={props.showRemixes}
-                            showViews={props.showViews}
+                            owner={item.owner}
                             src={item.image}
                             title={item.title}
-                            type={'project'}
-                            views={item.stats.views}
+                            type={'gallery'}
                         />
                     );
-                }
-                return (
-                    <Thumbnail
-                        href={href}
-                        key={key}
-                        owner={item.owner}
-                        src={item.image}
-                        title={item.title}
-                        type={'gallery'}
-                    />
-                );
-            })}
-        </FlexRow>
-    </div>
-);
+                })}
+            </FlexRow>
+        </div>
+    )
+};
 
 Grid.propTypes = {
     className: PropTypes.string,
+    isEggShaped: PropTypes.bool,
     itemType: PropTypes.string,
     items: PropTypes.arrayOf(PropTypes.object)
 };
