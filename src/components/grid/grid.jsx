@@ -23,6 +23,7 @@ const Grid = props => {
             <FlexRow>
                 {props.items.map((item, key) => {
                     const href = `/${props.itemType}/${item.id}/`;
+                    const pianoFunc = props.onPianoEnter ? () => props.onPianoEnter(key) : null;
                     if (props.itemType === 'projects') {
                         return (
                             <Thumbnail
@@ -42,6 +43,7 @@ const Grid = props => {
                                 title={item.title}
                                 type={'project'}
                                 views={item.stats.views}
+                                onPianoEnter={pianoFunc}
                             />
                         );
                     }
@@ -53,19 +55,21 @@ const Grid = props => {
                             src={item.image}
                             title={item.title}
                             type={'gallery'}
+                            onPianoEnter={pianoFunc}
                         />
                     );
                 })}
             </FlexRow>
         </div>
-    )
+    );
 };
 
 Grid.propTypes = {
     className: PropTypes.string,
     isEggShaped: PropTypes.bool,
     itemType: PropTypes.string,
-    items: PropTypes.arrayOf(PropTypes.object)
+    items: PropTypes.arrayOf(PropTypes.object),
+    onPianoEnter: PropTypes.func,
 };
 
 Grid.defaultProps = {

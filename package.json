@@ -35,7 +35,8 @@
     "react-helmet": "5.2.0",
     "scratch-docker": "^1.0.2",
     "scratch-parser": "^4.2.0",
-    "scratch-storage": "^0.5.1"
+    "scratch-storage": "^0.5.1",
+    "tone": "^13.4.9"
   },
   "devDependencies": {
     "ajv": "6.4.0",
