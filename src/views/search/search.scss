@@ -165,6 +165,10 @@ $base-bg: $ui-white;
             max-width: 500px;
             text-align: center;
         }
+
+        &.sillyTutorial {
+            background-image: url('computer-cat.jpg');
+        }
     }
 }
 
