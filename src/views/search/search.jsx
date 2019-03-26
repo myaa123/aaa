@@ -20,7 +20,9 @@ const render = require('../../lib/render.jsx');
 
 const ACCEPTABLE_MODES = ['trending', 'popular'];
 
-const results = require('./eggresults.json');
+const results = require('./results.json');
+
+const tone = require('tone');
 
 require('./search.scss');
 
@@ -31,6 +33,7 @@ class Search extends React.Component {
             'getSearchState',
             'handleChangeSortMode',
             'handleGetSearchMore',
+            'handlePianoHover',
             'getTab'
         ]);
         this.state = this.getSearchState();
@@ -41,6 +44,8 @@ class Search extends React.Component {
         this.state.loadMore = false;
 
         this.state.isEgg = false;
+        this.state.isPiano = false;
+        this.state.synth = null;
 
         let mode = '';
         const query = window.location.search;
@@ -92,6 +97,10 @@ class Search extends React.Component {
         if (term === 'egg' || term === 'eggs') {
             this.makeSurprise('isEgg');
         }
+        if (term === 'piano') {
+            this.makeSurprise('isPiano');
+        }
+
         this.props.dispatch(navigationActions.setSearchTerm(term));
     }
     componentDidUpdate (prevProps) {
@@ -101,6 +110,38 @@ class Search extends React.Component {
     }
     makeSurprise (surprise) {
         this.setState({[surprise]: true});
+    }
+    playNote (noteNumber) {
+        const synth = new tone.MonoSynth({
+            oscillator: {
+                type: 'square'
+            },
+            filter: {
+                Q: 2,
+                type: 'lowpass',
+                rolloff: -12
+            },
+            envelope: {
+                attack: 0.005,
+                decay: 3,
+                sustain: 0,
+                release: 0.45
+            },
+            filterEnvelope: {
+                attack: 0.5,
+                decay: 0.32,
+                sustain: 0.9,
+                release: 3,
+                baseFrequency: 700,
+                octaves: 2.3
+            }
+        }).toMaster();
+        const notes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'];
+        // play a note with the synth we setup
+        synth.triggerAttackRelease(notes[noteNumber % 8], '16n');
+    }
+    handlePianoHover (noteNumber) {
+        this.playNote(noteNumber);
     }
     getSearchState () {
         let pathname = window.location.pathname.toLowerCase();
@@ -186,6 +227,7 @@ class Search extends React.Component {
                 showFavorites={false}
                 showLoves={false}
                 showViews={false}
+                onPianoEnter={this.state.isPiano ? this.handlePianoHover : null}
             />
         );
         let searchAction = null;

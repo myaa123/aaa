@@ -8,6 +8,8 @@ const Thumbnail = props => {
     const extra = [];
     const info = [];
 
+    const surpriseClass = props.onPianoEnter ? 'pianoKey' : '';
+
     if (props.loves && props.showLoves) {
         extra.push(
             <div
@@ -117,7 +119,9 @@ const Thumbnail = props => {
                 'thumbnail',
                 props.type,
                 props.className,
+                surpriseClass
             )}
+            onMouseEnter={props.onPianoEnter}
         >
             {imgElement}
             <div className="thumbnail-info">
@@ -140,6 +144,7 @@ Thumbnail.propTypes = {
     href: PropTypes.string,
     linkTitle: PropTypes.bool,
     loves: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    onPianoEnter: PropTypes.func,
     remixes: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     showAvatar: PropTypes.bool,
     showFavorites: PropTypes.bool,
