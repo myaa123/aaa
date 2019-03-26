@@ -19,6 +19,9 @@ const Grid = require('../../components/grid/grid.jsx');
 
 require('./explore.scss');
 
+const results = require('./results.json');
+const piano = require('../../lib/piano');
+
 class Explore extends React.Component {
     constructor (props) {
         super(props);
@@ -27,16 +30,20 @@ class Explore extends React.Component {
             'handleGetExploreMore',
             'changeItemType',
             'handleChangeSortMode',
+            'handlePianoHover',
             'getBubble',
             'getTab'
         ]);
 
         this.state = this.getExploreState();
-        this.state.loaded = [];
+        this.state.loaded = results;
         this.state.offset = 0;
     }
     componentDidMount () {
         this.handleGetExploreMore();
+    }
+    handlePianoHover (noteNumber) {
+        piano(noteNumber);
     }
     getExploreState () {
         const categoryOptions = {
@@ -207,6 +214,7 @@ class Explore extends React.Component {
                             showFavorites={false}
                             showLoves={false}
                             showViews={false}
+                            onPianoEnter={this.state.category === 'music' ? this.handlePianoHover : null}
                         />
                         <Button
                             onClick={this.handleGetExploreMore}
