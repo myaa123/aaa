@@ -48,6 +48,9 @@ class Search extends React.Component {
         this.state.isPiano = false;
         this.state.isTutorial = false;
         this.state.isSpin = false;
+        this.state.isColor = false;
+        this.state.isGhost = false;
+        this.state.isBrightness = false;
         this.state.elapsed = 0;
 
         let mode = '';
@@ -108,6 +111,18 @@ class Search extends React.Component {
         }
         if (term === 'spin' || term === 'rotate') {
             this.makeSurprise('isSpin');
+            setInterval(this.tick, 200);
+        }
+        if (term.includes('color') || term.includes('rainbow')) {
+            this.makeSurprise('isColor');
+            setInterval(this.tick, 200);
+        }
+        if (term.includes('ghost')) {
+            this.makeSurprise('isGhost');
+            setInterval(this.tick, 200);
+        }
+        if (term.includes('bright')) {
+            this.makeSurprise('isBrightness');
             setInterval(this.tick, 200);
         }
 
@@ -172,7 +187,7 @@ class Search extends React.Component {
     }
     tick () {
         this.setState(prevState => (
-            {elapsed: (prevState.elapsed + 10) % 360}
+            {elapsed: (prevState.elapsed + 10)}
         ));
     }
     getTab (type) {
@@ -246,7 +261,22 @@ class Search extends React.Component {
                 transform: `rotate(${this.state.elapsed}deg)`
             };
         }
-        
+        if (this.state.isColor) {
+            return {
+                filter: `hue-rotate(${this.state.elapsed}deg) saturate(400%)`
+            };
+        }
+        if (this.state.isGhost) {
+            return {
+                opacity: `${Math.min(1, this.state.elapsed / 100)}`
+            };
+        }
+        if (this.state.isBrightness) {
+            return {
+                filter: `brightness(${Math.max(1, 2 - (this.state.elapsed / 100))})`
+            };
+        }
+
         return {};
     }
     render () {
