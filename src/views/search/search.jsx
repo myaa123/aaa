@@ -45,7 +45,7 @@ class Search extends React.Component {
 
         this.state.isEgg = false;
         this.state.isPiano = false;
-        this.state.synth = null;
+        this.state.isTutorial = false;
 
         let mode = '';
         const query = window.location.search;
@@ -100,6 +100,9 @@ class Search extends React.Component {
         if (term === 'piano') {
             this.makeSurprise('isPiano');
         }
+        if (term === 'silly tutorial') {
+            this.makeSurprise('isTutorial');
+        }
 
         this.props.dispatch(navigationActions.setSearchTerm(term));
     }
@@ -136,9 +139,9 @@ class Search extends React.Component {
                 octaves: 2.3
             }
         }).toMaster();
-        const notes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'];
+        const notes = ['C4', 'C#4', 'D4', 'D#4', 'E4', 'F4', 'F#4', 'G4', 'G#4', 'A4', 'A#4', 'B4'];
         // play a note with the synth we setup
-        synth.triggerAttackRelease(notes[noteNumber % 8], '16n');
+        synth.triggerAttackRelease(notes[noteNumber % 12], '16n');
     }
     handlePianoHover (noteNumber) {
         this.playNote(noteNumber);
@@ -244,6 +247,7 @@ class Search extends React.Component {
         }
         return (
             <div
+                className={this.state.isTutorial ? 'sillyTutorial' : ''}
                 id="projectBox"
                 key="projectBox"
             >
