@@ -22,7 +22,7 @@ const ACCEPTABLE_MODES = ['trending', 'popular'];
 
 const results = require('./results.json');
 
-const tone = require('tone');
+const piano = require('../../lib/piano');
 
 require('./search.scss');
 
@@ -34,7 +34,8 @@ class Search extends React.Component {
             'handleChangeSortMode',
             'handleGetSearchMore',
             'handlePianoHover',
-            'getTab'
+            'getTab',
+            'tick'
         ]);
         this.state = this.getSearchState();
         this.state.loaded = results;
@@ -46,6 +47,8 @@ class Search extends React.Component {
         this.state.isEgg = false;
         this.state.isPiano = false;
         this.state.isTutorial = false;
+        this.state.isSpin = false;
+        this.state.elapsed = 0;
 
         let mode = '';
         const query = window.location.search;
@@ -94,14 +97,18 @@ class Search extends React.Component {
             // We can silence this error because not all query strings are intended to be decoded.
         }
 
-        if (term === 'egg' || term === 'eggs') {
+        if (term.includes('egg')) {
             this.makeSurprise('isEgg');
         }
-        if (term === 'piano') {
+        if (term === 'piano' || term === 'piano' || term === 'music') {
             this.makeSurprise('isPiano');
         }
         if (term === 'silly tutorial') {
             this.makeSurprise('isTutorial');
+        }
+        if (term === 'spin' || term === 'rotate') {
+            this.makeSurprise('isSpin');
+            setInterval(this.tick, 200);
         }
 
         this.props.dispatch(navigationActions.setSearchTerm(term));
@@ -114,37 +121,9 @@ class Search extends React.Component {
     makeSurprise (surprise) {
         this.setState({[surprise]: true});
     }
-    playNote (noteNumber) {
-        const synth = new tone.MonoSynth({
-            oscillator: {
-                type: 'square'
-            },
-            filter: {
-                Q: 2,
-                type: 'lowpass',
-                rolloff: -12
-            },
-            envelope: {
-                attack: 0.005,
-                decay: 3,
-                sustain: 0,
-                release: 0.45
-            },
-            filterEnvelope: {
-                attack: 0.5,
-                decay: 0.32,
-                sustain: 0.9,
-                release: 3,
-                baseFrequency: 700,
-                octaves: 2.3
-            }
-        }).toMaster();
-        const notes = ['C4', 'C#4', 'D4', 'D#4', 'E4', 'F4', 'F#4', 'G4', 'G#4', 'A4', 'A#4', 'B4'];
-        // play a note with the synth we setup
-        synth.triggerAttackRelease(notes[noteNumber % 12], '16n');
-    }
+    
     handlePianoHover (noteNumber) {
-        this.playNote(noteNumber);
+        piano(noteNumber);
     }
     getSearchState () {
         let pathname = window.location.pathname.toLowerCase();
@@ -190,6 +169,11 @@ class Search extends React.Component {
                 loadMore: willLoadMore
             });
         });
+    }
+    tick () {
+        this.setState(prevState => (
+            {elapsed: (prevState.elapsed + 10) % 360}
+        ));
     }
     getTab (type) {
         const term = this.props.searchTerm.split(' ').join('+');
@@ -256,9 +240,18 @@ class Search extends React.Component {
             </div>
         );
     }
+    fancyStyle () {
+        if (this.state.isSpin) {
+            return {
+                transform: `rotate(${this.state.elapsed}deg)`
+            };
+        }
+        
+        return {};
+    }
     render () {
         return (
-            <div>
+            <div style={this.fancyStyle()}>
                 <div className="outer">
                     <TitleBanner className="masthead">
                         <div className="inner">
