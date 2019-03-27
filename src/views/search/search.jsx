@@ -20,8 +20,6 @@ const render = require('../../lib/render.jsx');
 
 const ACCEPTABLE_MODES = ['trending', 'popular'];
 
-const results = require('./results.json');
-
 const piano = require('../../lib/piano');
 
 require('./search.scss');
@@ -38,7 +36,7 @@ class Search extends React.Component {
             'tick'
         ]);
         this.state = this.getSearchState();
-        this.state.loaded = results;
+        this.state.loaded = {};
         this.state.loadNumber = 16;
         this.state.mode = 'popular';
         this.state.offset = 0;
