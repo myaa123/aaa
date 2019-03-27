@@ -107,7 +107,6 @@ const catFacts = [
     'Cats are able to read minds through their whiskers.',
     'Soon after birth, cats extend their tails into a breeze and can sail hundreds of feet in the air for miles to find new territory.',
     'Cats\' memory is encoded in their DNA, which explains the knowing looks on their faces.',
-    'In winter, cats cacoon themselves onto the sides of maple trees, slowly licking the sap to survive.',
     'Charles Francis Richter originally created his scale to measure the integrated power of cat purrs.',
     'Cat hair is being studied for use in building space elevators. Ironically, the first use of space elevators will be as scratching posts.',
     'When you are not looking, cats stare at a point exactly one foot behind your head.',
