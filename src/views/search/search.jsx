@@ -105,13 +105,13 @@ class Search extends React.Component {
         if (term.includes('egg')) {
             this.makeSurprise('isEgg');
         }
-        if (term === 'piano' || term === 'piano' || term === 'music') {
+        if (term.includes('piano') || term === 'music') {
             this.makeSurprise('isPiano');
         }
         if (term.includes('cat fact') || term.includes('tutorial')) {
             this.makeSurprise('isTutorial');
         }
-        if (term === 'spin' || term === 'rotate' || term === 'whirl') {
+        if (term.includes('spin') || term.includes('rotate') || term.includes('whirl')) {
             this.makeSurprise('isSpin');
             setInterval(this.tick, 200);
         }
@@ -265,25 +265,18 @@ class Search extends React.Component {
         );
     }
     fancyStyle () {
+        const style = {};
         if (this.state.isSpin) {
-            return {
-                transform: `rotate(${this.state.elapsed}deg)`
-            };
+            style.transform = `rotate(${this.state.elapsed}deg)`;
         }
         if (this.state.isColor) {
-            return {
-                filter: `hue-rotate(${this.state.elapsed}deg) saturate(400%)`
-            };
+            style.filter = `hue-rotate(${this.state.elapsed}deg) saturate(400%)`;
         }
         if (this.state.isGhost) {
-            return {
-                opacity: `${Math.min(1, this.state.elapsed / 100)}`
-            };
+            style.opacity= `${Math.min(1, this.state.elapsed / 100)}`;
         }
         if (this.state.isBrightness) {
-            return {
-                filter: `brightness(${Math.max(1, 2 - (this.state.elapsed / 100))})`
-            };
+            style.filter = `brightness(${Math.max(1, 2 - (this.state.elapsed / 100))})`;
         }
         if (this.state.isPixelate && this.state.elapsed < 100) {
             const radius = Math.max(2, 10 - ((this.state.elapsed) / 10));
@@ -305,12 +298,10 @@ class Search extends React.Component {
             this.pixelfilter.innerHTML = pixelateEffect;
             this.pixelfilter.setAttribute('id', `pixelate`);
 
-            return {
-                filter: `url(#pixelate)`
-            };
+            style.filter = `url(#pixelate)`;
         }
 
-        return {};
+        return style;
     }
 
     render () {
