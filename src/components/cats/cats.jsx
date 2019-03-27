@@ -34,7 +34,11 @@ const catImages = [
     '/images/cats/1.jpg',
     '/images/cats/2.jpg',
     '/images/cats/3.jpg',
-    '/images/cats/4.jpg'
+    '/images/cats/4.jpg',
+    '/images/cats/Cat1.jpg',
+    '/images/cats/Cat2.jpg',
+    '/images/cats/Cat3.jpg',
+    '/images/cats/Cat4.jpg'
 ];
 
 /* eslint-disable max-len */
@@ -103,7 +107,6 @@ const catFacts = [
     'Cats are able to read minds through their whiskers.',
     'Soon after birth, cats extend their tails into a breeze and can sail hundreds of feet in the air for miles to find new territory.',
     'Cats\' memory is encoded in their DNA, which explains the knowing looks on their faces.',
-    'In winter, cats cacoon themselves onto the sides of maple trees, slowly licking the sap to survive.',
     'Charles Francis Richter originally created his scale to measure the integrated power of cat purrs.',
     'Cat hair is being studied for use in building space elevators. Ironically, the first use of space elevators will be as scratching posts.',
     'When you are not looking, cats stare at a point exactly one foot behind your head.',
@@ -128,7 +131,17 @@ const catFacts = [
     'Cats are the first most popular pet in the US, after dogs.',
     'If you rick roll a cat, it will never forgive you.',
     'Cats persuaded humans to create the internet.',
-    'If you walk under a ladder and then pet a black cat, it will actually bring you good luck.'
+    'If you walk under a rainbow and then pet a black cat, it will actually bring you good luck.',
+    'Cats can contain entire universes!',
+    'Every time a hat block gets triggered, a cat starts purring.',
+    'The Jungle Book is a true story based on a cat named Meowgli.',
+    'Camera is a common misspelling of Catmera, a device invented specifically to record cats.',
+    'Cats don\'t steal your breath because it doesn\'t smell like catfood.',
+    'Cats hang out on keyboards in an attempt to send messages to other internet cats.',
+    'Cat is an abbreviation for category.',
+    'Cat is an acronym which stands for Cats Are Terrific.',
+    'When cats are fully enclosed in boxes, they can teleport to alternative universes.',
+    'If you put buttered toast butter-side up, on your cat, then your cat will be able to fly.'
 ];
 
 /* eslint-enable max-len */
