@@ -168,6 +168,10 @@ $base-bg: $ui-white;
 
         &.sillyTutorial {
             background-image: url('computer-cat.jpg');
+            background-size: 50%;
+            .thumbnail {
+                opacity: .8;
+            }
         }
     }
 }
