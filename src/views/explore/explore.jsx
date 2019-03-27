@@ -35,7 +35,7 @@ class Explore extends React.Component {
         ]);
 
         this.state = this.getExploreState();
-        this.state.loaded = {};
+        this.state.loaded = [];
         this.state.offset = 0;
     }
     componentDidMount () {

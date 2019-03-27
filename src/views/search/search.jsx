@@ -36,7 +36,7 @@ class Search extends React.Component {
             'tick'
         ]);
         this.state = this.getSearchState();
-        this.state.loaded = {};
+        this.state.loaded = [];
         this.state.loadNumber = 16;
         this.state.mode = 'popular';
         this.state.offset = 0;
