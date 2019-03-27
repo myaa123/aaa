@@ -51,6 +51,7 @@ class Search extends React.Component {
         this.state.isColor = false;
         this.state.isGhost = false;
         this.state.isBrightness = false;
+        this.state.isPixelate = false;
         this.state.elapsed = 0;
 
         let mode = '';
@@ -106,7 +107,7 @@ class Search extends React.Component {
         if (term === 'piano' || term === 'piano' || term === 'music') {
             this.makeSurprise('isPiano');
         }
-        if (term === 'silly tutorial') {
+        if (term.includes('cat fact') || term.includes('tutorial')) {
             this.makeSurprise('isTutorial');
         }
         if (term === 'spin' || term === 'rotate') {
@@ -121,8 +122,12 @@ class Search extends React.Component {
             this.makeSurprise('isGhost');
             setInterval(this.tick, 200);
         }
-        if (term.includes('bright')) {
+        if (term.includes('brightness')) {
             this.makeSurprise('isBrightness');
+            setInterval(this.tick, 200);
+        }
+        if (term.includes('pixelate')) {
+            this.makeSurprise('isPixelate');
             setInterval(this.tick, 200);
         }
 
@@ -276,12 +281,37 @@ class Search extends React.Component {
                 filter: `brightness(${Math.max(1, 2 - (this.state.elapsed / 100))})`
             };
         }
+        if (this.state.isPixelate && this.state.elapsed < 100) {
+            const radius = Math.max(2, 10 - ((this.state.elapsed) / 10));
+            const floodSize = radius > 1 ? Math.floor(radius - 1) : 1;
+            const pixelateEffect = `
+                <feFlood x="${floodSize}" y="${floodSize}" height="${(floodSize) / 2}" width="${(floodSize) / 2}" />
+                <feComposite width="${radius * 2}" height="${radius * 2}" />
+                <feTile result="a" />
+                <feComposite in="SourceGraphic" in2="a" operator="in" />
+                <feMorphology operator="dilate" radius="${radius}" />
+            `;
+
+            if (!this.pixelfilter) {
+                this.pixelfilter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+                this.pixelfilter.setAttribute('x', 0);
+                this.pixelfilter.setAttribute('y', 0);
+                document.body.appendChild(this.pixelfilter);
+            }
+            this.pixelfilter.innerHTML = pixelateEffect;
+            this.pixelfilter.setAttribute('id', `pixelate`);
+
+            return {
+                filter: `url(#pixelate)`
+            };
+        }
 
         return {};
     }
+
     render () {
         return (
-            <div style={this.fancyStyle()}>
+            <div style={this.fancyStyle()} >
                 <div className="outer">
                     <TitleBanner className="masthead">
                         <div className="inner">
