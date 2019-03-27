@@ -145,7 +145,7 @@ class Search extends React.Component {
     }
     
     handlePianoHover (noteNumber) {
-        piano(noteNumber);
+        piano(noteNumber, ACCEPTABLE_MODES.indexOf(this.state.mode));
     }
     getSearchState () {
         let pathname = window.location.pathname.toLowerCase();

@@ -42,7 +42,8 @@ class Explore extends React.Component {
         this.handleGetExploreMore();
     }
     handlePianoHover (noteNumber) {
-        piano(noteNumber);
+        const instumentNumber = this.state.acceptableModes.indexOf(this.state.mode) % 3;
+        piano(noteNumber, instumentNumber);
     }
     getExploreState () {
         const categoryOptions = {
