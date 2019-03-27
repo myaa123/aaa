@@ -19,7 +19,6 @@ const Grid = require('../../components/grid/grid.jsx');
 
 require('./explore.scss');
 
-const results = require('./results.json');
 const piano = require('../../lib/piano');
 
 class Explore extends React.Component {
@@ -36,7 +35,7 @@ class Explore extends React.Component {
         ]);
 
         this.state = this.getExploreState();
-        this.state.loaded = results;
+        this.state.loaded = {};
         this.state.offset = 0;
     }
     componentDidMount () {
