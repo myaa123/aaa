@@ -173,6 +173,13 @@ $base-bg: $ui-white;
                 opacity: .8;
             }
         }
+        &.fisheye {
+            background-image: url('fish.svg');
+            background-size: 100%;
+            .thumbnail {
+                opacity: .8;
+            }
+        }
     }
 }
 

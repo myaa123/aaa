@@ -52,6 +52,7 @@ class Search extends React.Component {
         this.state.isGhost = false;
         this.state.isBrightness = false;
         this.state.isPixelate = false;
+        this.state.isFisheye = false;
         this.state.elapsed = 0;
 
         let mode = '';
@@ -110,7 +111,7 @@ class Search extends React.Component {
         if (term.includes('cat fact') || term.includes('tutorial')) {
             this.makeSurprise('isTutorial');
         }
-        if (term === 'spin' || term === 'rotate') {
+        if (term === 'spin' || term === 'rotate' || term === 'whirl') {
             this.makeSurprise('isSpin');
             setInterval(this.tick, 200);
         }
@@ -129,6 +130,9 @@ class Search extends React.Component {
         if (term.includes('pixelate')) {
             this.makeSurprise('isPixelate');
             setInterval(this.tick, 200);
+        }
+        if (term.includes('fisheye')) {
+            this.makeSurprise('isFisheye');
         }
 
         this.props.dispatch(navigationActions.setSearchTerm(term));
@@ -251,7 +255,7 @@ class Search extends React.Component {
         }
         return (
             <div
-                className={this.state.isTutorial ? 'sillyTutorial' : ''}
+                className={this.state.isTutorial ? 'sillyTutorial' : this.state.isFisheye ? 'fisheye' : ''}
                 id="projectBox"
                 key="projectBox"
             >
